@@ -11,19 +11,19 @@
     <div class="container">
         <nav>
             <ul class="navigationLink">
-                <li class="navMenu active" data-function="atRandom">AT RANDOM 
+                <li class="navMenu randomClass active" data-function="atRandom">AT RANDOM 
                     <div class="nav--item__border"></div>
                 </li>
-                <li class="navMenu" data-function="byGenre">BY GENRE
+                <li class="navMenu genreClass" data-function="byGenre">BY GENRE
                     <div class="nav--item__border"></div>
                 </li>
-                <li class="navMenu" data-function="byAuthor">BY AUTHOR
+                <li class="navMenu authorClass" data-function="byAuthor">BY AUTHOR
                     <div class="nav--item__border"></div>
                 </li>
             </ul>
         </nav>
         
-        <div class="selections byRandom">
+        <div class="selections byRandom" id="byRandomDiv">
             <div class="secondChoice">
                 <h3>Amount to Generate:</h3>
                 <select id="randomNo">
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="selections byAuthor">
+        <div class="selections byAuthor" id="byAuthorDiv">
             <div class="firstChoice">
                 <h3>Select Author:</h3>
                 <select id="authorSelect">
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div class="selections byGenre">
+        <div class="selections byGenre" id="byGenreDiv">
             <div class="firstChoice">
                 <h3>Select Genre:</h3>
                 <select id="genreSelect">
@@ -93,7 +93,7 @@
             <button class="generateBtn btn-13">Generate</button>
         </div>
           <div class="result">
-            <div class="quotes">
+            <!-- <div class="quotes">
                 <div class="quoteContent">
                     <h4>It is in your moments of decision that your destiny is shaped.</h4>
                 <p>-Tony Robbins</p>
@@ -134,7 +134,7 @@
                     <h4>It is in your moments of decision that your destiny is shaped.</h4>
                 <p>-Tony Robbins</p>
                 </div>
-            </div>
+            </div> -->
             
            
           </div>

@@ -70,7 +70,7 @@ li {
 .navigationLink li:hover .nav--item__border {
   max-width: 95%;
   left: 2.5%;
-  bottom: 5%;
+  bottom: 1%;
 }
 
 .active {
@@ -208,23 +208,27 @@ li:active {
   width: 40%;
   height: 100%;
   background-color: #26272c;
-  text-align: center;
+
   padding: 1.5rem;
   border-radius: 0.8rem;
   display: flex;
   place-items: center;
 }
 
+.quoteContent {
+    text-align: center;
+    width: 100%;
+}
  .quoteContent h4 {
-  color: white;
-  font-weight: 400;
+  color: rgb(205, 203, 216);
+  font-weight: 300;
   font-size: 1.3rem;
   line-height: 1.5;
   /* letter-spacing: 1px; */
 }
 
 .quoteContent p {
-  color: white;
+  color: rgba(255, 255, 255, 0.486);
   margin-top: 2rem;
   font-style: italic;
   text-align: right;
