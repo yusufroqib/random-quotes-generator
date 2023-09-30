@@ -197,13 +197,27 @@ li:active {
 }
 
 .result {
-  margin-top: 5rem;
+  margin-top: 3rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   row-gap: 2rem;
   column-gap: 2rem;
 }
+
+#fetchInfo {
+    margin: 4rem auto 0;
+    width: 85%;
+    color: #4957d1;
+    background-color: #eff1fa;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    border-radius: 0.8rem;
+    font-size: 1.5rem;
+    /* display: block; */
+}
+
 .quotes {
   width: 40%;
   height: 100%;
@@ -233,3 +247,11 @@ li:active {
   font-style: italic;
   text-align: right;
 }
+
+.error {
+    text-align: center;
+    line-height: 70px;
+    color: red;
+    font-size: 3rem;
+    text-shadow: 2px 5px 9px rgb(0, 42);
+  }
