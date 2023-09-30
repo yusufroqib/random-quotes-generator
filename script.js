@@ -15,7 +15,30 @@ navBar.addEventListener('click', (event) => {
 
     // Add 'active' class to the clicked navbar item
     event.target.classList.add('active');
+
+    let functionName = event.target.getAttribute('data-function');
+
+    // Call the corresponding function based on the data-function attribute
+    if (functionName && window[functionName] && typeof window[functionName] === 'function') {
+      window[functionName]();
+    }
+
   }
 });
 
 
+
+function atRandom() {
+    console.log('Function 1 executed');
+    // Your function 1 logic goes here
+  }
+  
+  function byGenre() {
+    console.log('Function 2 executed');
+    // Your function 2 logic goes here
+  }
+  
+function byAuthor() {
+    console.log('Function 3 executed');
+    // Your function 3 logic goes here
+  }

@@ -111,11 +111,21 @@ li:active {
   }
 }
 
+
+
 .selections {
   margin-top: 3rem;
   display: flex;
   justify-content: space-around;
   gap: 4rem;
+}
+
+.byAuthor {
+    display: none;
+}
+
+.byGenre {
+    display: none;
 }
 
 .selections h3 {

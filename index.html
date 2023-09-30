@@ -11,27 +11,40 @@
     <div class="container">
         <nav>
             <ul class="navigationLink">
-                <li class="navMenu active">AT RANDOM 
-                    <!-- <div class="nav--item__border"></div> -->
+                <li class="navMenu active" data-function="atRandom">AT RANDOM 
+                    <div class="nav--item__border"></div>
                 </li>
-                <li class="navMenu">BY GENRE
-                    <!-- <div class="nav--item__border"></div> -->
+                <li class="navMenu" data-function="byGenre">BY GENRE
+                    <div class="nav--item__border"></div>
                 </li>
-                <li class="navMenu">BY AUTHOR
-                    <!-- <div class="nav--item__border"></div> -->
+                <li class="navMenu" data-function="byAuthor">BY AUTHOR
+                    <div class="nav--item__border"></div>
                 </li>
             </ul>
         </nav>
         
-        <div class="selections">
+        <div class="selections byRandom">
+            <div class="secondChoice">
+                <h3>Amount to Generate:</h3>
+                <select id="secondSelect">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="selections byAuthor">
             <div class="firstChoice">
                 <h3>Select Author:</h3>
                 <select id="firstSelect">
-                    <option value="Michael Scofield">Michael Scofield</option>
-                    <option value="Michael Scofield">Michael Scofield</option>
-                    <option value="Michael Scofield">Michael Scofield</option>
-                    <option value="Michael Scofield">Michael Scofield</option>
-                    
                 </select>
             </div>
            
@@ -41,9 +54,41 @@
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
                 </select>
             </div>
-          </div>
+        </div>
+
+        <div class="selections byGenre">
+            <div class="firstChoice">
+                <h3>Select Genre:</h3>
+                <select id="firstSelect">
+                </select>
+            </div>
+           
+            <div class="secondChoice">
+                <h3>Amount to Generate:</h3>
+                <select id="secondSelect">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+
         <div class="btnDiv">
             <button class="generateBtn btn-13">Generate</button>
         </div>
