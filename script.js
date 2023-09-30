@@ -1,12 +1,11 @@
-const url = `https://quote-garden.onrender.com/api/v3/quotes/random`;
+const url = `https://quote-garden.onrender.com/api/v3/quotes`;
 let navBar = document.querySelector(".navigationLink");
 
 const byRandomDiv = document.getElementById('byRandomDiv');
 const byAuthorDiv = document.getElementById('byAuthorDiv');
 const byGenreDiv = document.getElementById('byGenreDiv');
 const fetchInfo = document.getElementById('fetchInfo')
-console.log(navBar);
-
+// console.log(navBar);
 const ResultEl = document.querySelector(".result");
 const generateBtn = document.querySelector(".generateBtn");
 
@@ -23,6 +22,7 @@ const getGenres = () => {
 
     return genres
 }
+
 const getAuthors = () => {
     const apiUrl = 'https://quote-garden.onrender.com/api/v3/authors';
     const authors = fetch(apiUrl)
@@ -40,6 +40,11 @@ const appendOptionsElToSelectEl = (optionItem, selectEl) => {
 
 const populateSelectEl = (selectEl, optionItems) => {
     optionItems.forEach((optionItem) => appendOptionsElToSelectEl(optionItem, selectEl))
+   
+    //To add Search functionality inside the select element
+    $(document).ready(function() {
+        $('#authorSelect').select2({width: '200px'});
+      });
 }
 
 const setUpGenres = async () => {
@@ -49,7 +54,7 @@ const setUpGenres = async () => {
     const genresList = await getGenres()
     const authorsList = await getAuthors()
     authorsList.shift()
-    console.log(authorsList);
+    // console.log(authorsList);
     // console.log(genresList);
 
     populateSelectEl(genreSelect, genresList)
@@ -58,7 +63,7 @@ const setUpGenres = async () => {
 setUpGenres()
 
 
-generateBtn.addEventListener("click", function() {
+generateBtn.addEventListener("click", () => {
     const activeNavMenu = document.querySelector(".active");
     const functionName = activeNavMenu.getAttribute("data-function");
   
@@ -70,200 +75,201 @@ generateBtn.addEventListener("click", function() {
 
 // Add a click event listener to the parent element
 navBar.addEventListener("click", (event) => {
-  if (event.target.classList.contains("navMenu")) {
-    // if (event.target.tagName === 'LI') {
-    console.log(event.target.tagName);
+  if (event.target.classList.contains("navMenu")) {             // if (event.target.tagName === 'LI') {
+    // console.log(event.target.tagName);
+
     // Remove 'active' class from all navbar items
     let navBarItems = document.querySelectorAll(".navMenu");
-    console.log(navBarItems);
+    // console.log(navBarItems);
     navBarItems.forEach((item) => {
       item.classList.remove("active");
     });
+
     // Add 'active' class to the clicked navbar item
     event.target.classList.add("active");
     
     const activeNavMenu = document.querySelector(".active");
     const selectedFunction = activeNavMenu.getAttribute('data-function');
+
     byRandomDiv.style.display = (selectedFunction === 'atRandom') ? 'flex' : 'none';
     byAuthorDiv.style.display = (selectedFunction === 'byAuthor') ? 'flex' : 'none';
     byGenreDiv.style.display = (selectedFunction === 'byGenre') ? 'flex' : 'none';
-    ResultEl.innerHTML = ''
-    fetchInfo.style.display = 'none'
+    ResultEl.innerHTML = '';
+    fetchInfo.style.display = 'none';
 }
 });
 
 function atRandom() {
-  console.log("Function 1 executed");
   const generateNo = document.getElementById("randomNo");
 
-        let generateNoValue = parseInt(generateNo.value)
-        console.log(generateNoValue);
+        let generateNoValue = parseInt(generateNo.value);
+        // console.log(generateNoValue);
 
 
-        fetch(`${url}?count=${generateNoValue}`)        
+        fetch(`${url}?limit=${generateNoValue}`)        
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            // console.log(data);
             // console.log(data.data[0].quoteText);
             // console.log(data.data[0].quoteAuthor);
             // console.log(data.data[1].quoteText);
             // console.log(data.data[2].quoteText);
 
-            let totalQuotes = parseInt(data.totalQuotes)
-            // console.log(totalQuotes);
-
             let word 
 
-            if(totalQuotes < 2) {
+            if(generateNoValue < 2) {
                 word = 'Quote'
             } else{
                 word = 'Quotes'
             }
 
             fetchInfo.innerHTML = `
-            <h2>Showing ${totalQuotes} ${word}</h2>
+            <h2>Showing ${generateNoValue} ${word}</h2>
             `
 
             let sentences = [];
-            let author = []
+            let authors = [];
 
-            // Generate sentences (you can replace this logic with your own sentence generation logic)
-            for (let i = 0; i < generateNoValue; i++) {
-                sentences.push(data.data[i].quoteText);
-                author.push(data.data[i].quoteAuthor)
-            }
+            
+            data.data.forEach(item => {
+                sentences.push(item.quoteText);
+                authors.push(item.quoteAuthor);
+            });
+            // console.log(sentences);
 
-            console.log(sentences);
-            fetchInfo.style.display = 'flex'
-            ResultEl.style.display = ''
-            ResultEl.innerHTML = ''
+            fetchInfo.style.display = 'flex';
+            ResultEl.style.display = '';
+            ResultEl.innerHTML = '';
             for (let j = 0; j < sentences.length; j++) {
                 ResultEl.innerHTML += `
                 <div class="quotes">
                 <div class="quoteContent">
                     <h4>${sentences[j]}</h4>
-                <p>-${author[j]}</p>
+                <p>-${authors[j]}</p>
                 </div>
             </div>
                 `
             }
-    }).catch(() => {
+    })
+    .catch(() => {
         fetchInfo.innerHTML = `
               <h2 class="error">Oops😞!         <br>
               Could not Generate Quote.</h2>
           `;
           fetchInfo.style.display = 'flex'
-      });
+    });
 }
 
 function byGenre() {
     const generateNo = document.getElementById("genreNo");
     const genreSelect = document.getElementById("genreSelect");
 
-        let generateNoValue = parseInt(generateNo.value)
-        let getGenreValue = genreSelect.value
-        console.log(generateNoValue);
+    let generateNoValue = parseInt(generateNo.value)
+    let getGenreValue = genreSelect.value
+    // console.log(generateNoValue);
 
 
-        fetch(`${url}?count=${generateNoValue}&genre=${getGenreValue}`)        
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            let totalQuotes = parseInt(data.totalQuotes)
+    fetch(`${url}?limit=${generateNoValue}&genre=${getGenreValue}`)        
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
 
-            let word 
+        let word 
+        let sentences = [];
+        let authors = []
 
-            if(totalQuotes < 2) {
-                word = 'Quote'
-            } else{
-                word = 'Quotes'
-            }
-            
-            fetchInfo.innerHTML = `
-            <h2>Showing ${totalQuotes} ${word}</h2>
-            `
+        if(sentences.length < 2) {
+            word = 'Quote'
+        } else{
+            word = 'Quotes'
+        }
+        
 
-            let sentences = [];
-            let author = []
-            // Generate sentences (you can replace this logic with your own sentence generation logic)
-            for (let i = 0; i < totalQuotes; i++) {
-                sentences.push(data.data[i].quoteText);
-                author.push(data.data[i].quoteAuthor)
-            }
+        
+        data.data.forEach(item => {
+            sentences.push(item.quoteText);
+            authors.push(item.quoteAuthor);
+        });
+        // console.log(sentences);
 
-            console.log(sentences);
-            fetchInfo.style.display = 'flex'
-            ResultEl.style.display = ''
-            ResultEl.innerHTML = ''
-            for (let j = 0; j < sentences.length; j++) {
-                ResultEl.innerHTML += `
-                <div class="quotes">
-                <div class="quoteContent">
-                    <h4>${sentences[j]}</h4>
-                <p>-${author[j]}</p>
-                </div>
-            </div>
-                `
-            }
-    }).catch(() => {
         fetchInfo.innerHTML = `
-              <h2 class="error">Oops😞!         <br>
-              Could not Generate Quote.</h2>
-          `;
-          fetchInfo.style.display = 'flex'
-      });
+        <h2>Showing ${sentences.length} ${word}</h2>
+        `
+
+        fetchInfo.style.display = 'flex'
+        ResultEl.style.display = ''
+        ResultEl.innerHTML = ''
+        for (let j = 0; j < sentences.length; j++) {
+            ResultEl.innerHTML += `
+            <div class="quotes">
+            <div class="quoteContent">
+                <h4>${sentences[j]}</h4>
+            <p>-${authors[j]}</p>
+            </div>
+        </div>
+            `
+        }
+    })
+    .catch(() => {
+        fetchInfo.innerHTML = `
+            <h2 class="error">Oops😞!         <br>
+            Could not Generate Quote.</h2>
+        `;
+        fetchInfo.style.display = 'flex'
+    });
 }
 
 function byAuthor() {
     const generateNo = document.getElementById("authorNo");
     const authorSelect = document.getElementById("authorSelect");
 
-        let generateNoValue = parseInt(generateNo.value)
-        let getAuthorValue = authorSelect.value
-        console.log(generateNoValue);
+    let generateNoValue = parseInt(generateNo.value)
+    let getAuthorValue = authorSelect.value
+    console.log(generateNoValue);
 
 
-        fetch(`${url}?count=${generateNoValue}&author=${getAuthorValue}`)        
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            let totalQuotes = parseInt(data.totalQuotes)
-            // console.log(totalQuotes);
-            
-            let word 
+    fetch(`${url}?limit=${generateNoValue}&author=${getAuthorValue}`)        
+    .then((response) => response.json())
+    .then((data) => {
+        // console.log(data);
+        let totalQuotes = parseInt(data.totalQuotes)
+        // console.log(totalQuotes);
+        
+        let word
+        let sentences = [];
+        let authors = [] 
 
-            if(totalQuotes < 2) {
-                word = 'Quote'
-            } else{
-                word = 'Quotes'
-            }
-            
-            fetchInfo.innerHTML = `
-            <h2>Showing ${totalQuotes} ${word}</h2>
-            `
+        if(totalQuotes < 2) {
+            word = 'Quote'
+        } else{
+            word = 'Quotes'
+        }
+        
+      
+        data.data.forEach(item => {
+            sentences.push(item.quoteText);
+            authors.push(item.quoteAuthor);
+        });
 
-            let sentences = [];
-            let author = []
-            // Generate sentences (you can replace this logic with your own sentence generation logic)
-            for (let i = 0; i < totalQuotes; i++) {
-                sentences.push(data.data[i].quoteText);
-                author.push(data.data[i].quoteAuthor)
-            }
+        fetchInfo.innerHTML = `
+        <h2>Showing ${sentences.length} ${word}</h2>
+        `
 
-            console.log(sentences);
-            fetchInfo.style.display = 'flex'
-            ResultEl.style.display = ''
-            ResultEl.innerHTML = ''
-            for (let j = 0; j < sentences.length; j++) {
-                ResultEl.innerHTML += `
-                <div class="quotes">
-                <div class="quoteContent">
-                    <h4>${sentences[j]}</h4>
-                <p>-${author[j]}</p>
-                </div>
+        // console.log(sentences);
+
+        fetchInfo.style.display = 'flex'
+        ResultEl.style.display = ''
+        ResultEl.innerHTML = ''
+        for (let j = 0; j < sentences.length; j++) {
+            ResultEl.innerHTML += `
+            <div class="quotes">
+            <div class="quoteContent">
+                <h4>${sentences[j]}</h4>
+            <p>-${authors[j]}</p>
             </div>
-                `
-            }
+        </div>
+            `
+        }
     }).catch(() => {
         fetchInfo.innerHTML = `
               <h2 class="error">Oops😞!         <br>

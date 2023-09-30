@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +11,10 @@
 }
 
 body {
-  background: #1e1f25;
+  background-image: url(/img/bgImage.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
   display: flex;
   justify-content: center;
   place-items: center;
@@ -29,19 +34,27 @@ body {
   box-shadow: 0 20px 40px rgba(38, 33, 61, 0.2);
 }
 
-ul {
+.heading {
+    font-size: 2.5rem;
+    color: #ebebeb;
+    text-align: center;
+    font-family: Nunito;
+}
+.navigationLink {
   display: flex;
   width: 100%;
   background-color: #1e1f25;
   border-radius: 10px;
   margin: auto;
+  margin-top: 2rem;
   /* max-width: 1000px; */
   justify-content: space-between;
   text-align: center;
   font-size: 1.2rem;
+  font-weight: 500;
 }
 
-li {
+.navMenu {
   /* padding: 1rem 2rem 1.15rem; */
   padding: 1rem 0;
   text-transform: uppercase;
@@ -67,7 +80,7 @@ li {
 
 /* // the nav--item hover state! */
 
-.navigationLink li:hover .nav--item__border {
+.navMenu:hover .nav--item__border {
   max-width: 95%;
   left: 2.5%;
   bottom: 1%;
@@ -120,6 +133,7 @@ li:active {
   gap: 4rem;
 }
 
+
 .byAuthor {
     display: none;
 }
@@ -130,17 +144,20 @@ li:active {
 
 .selections h3 {
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
+
 .selections select {
-  font-size: 1.1rem;
+  font-size: 1rem;
+  padding: 3px;
+  border-radius: 4px;
 }
 
 .firstChoice,
 .secondChoice {
   display: flex;
   place-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .btnDiv {
