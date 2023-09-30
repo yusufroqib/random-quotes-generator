@@ -1,0 +1,221 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+:root {
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #1e1f25;
+  display: flex;
+  justify-content: center;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: #060613;
+  width: 70%;
+  /* position: absolute;
+    transform: translate(-50%, -50%); */
+  top: 50%;
+  left: 50%;
+  /* height: 80vh; */
+  padding: 50px 50px;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(38, 33, 61, 0.2);
+}
+
+ul {
+  display: flex;
+  width: 100%;
+  background-color: #1e1f25;
+  border-radius: 10px;
+  margin: auto;
+  /* max-width: 1000px; */
+  justify-content: space-between;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+li {
+  /* padding: 1rem 2rem 1.15rem; */
+  padding: 1rem 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #ebebeb;
+
+  width: 33%;
+  position: relative;
+}
+
+.nav--item__border {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 95%;
+  height: 0.02em;
+  background-color: azure;
+  /* // the hidden state */
+  left: 50%;
+  max-width: 0;
+  transition: 0.2s;
+}
+
+/* // the nav--item hover state! */
+
+.navigationLink li:hover .nav--item__border {
+  max-width: 95%;
+  left: 2.5%;
+  bottom: 5%;
+}
+
+.active {
+  background-color: azure;
+  color: #1e1f25;
+  border-radius: inherit;
+  transition: 0.3s ease-in;
+}
+
+/* li:hover {
+ background: aqua;
+color: #27262c;
+  animation: spring 300ms ease-out;
+  text-shadow: 0 -1px 0 #ef816c;
+	font-weight: bold;
+}
+
+li:active {
+  transform: translateY(4px);
+} */
+
+@keyframes spring {
+  15% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(1.2, 1.1);
+  }
+  40% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(0.95, 0.95);
+  }
+  75% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(1.05, 1);
+  }
+  100% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(1, 1);
+  }
+}
+
+.selections {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 4rem;
+}
+
+.selections h3 {
+  color: #fff;
+  font-size: 1.1rem;
+}
+.selections select {
+  font-size: 1.1rem;
+}
+
+.firstChoice,
+.secondChoice {
+  display: flex;
+  place-items: center;
+  gap: 0.5rem;
+}
+
+.btnDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.btn-13 {
+  width: 200px;
+  height: 50px;
+  color: #230b7a;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+  outline: none;
+  background-color: #89d8d3;
+  background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+  border: none;
+  z-index: 1;
+}
+.btn-13:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+  background-color: #4dccc6;
+  background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+  box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-13:hover {
+  color: #fff;
+}
+.btn-13:hover:after {
+  top: 0;
+  height: 100%;
+}
+.btn-13:active {
+  top: 2px;
+}
+
+.result {
+  margin-top: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 2rem;
+  column-gap: 2rem;
+}
+.quotes {
+  width: 40%;
+  height: 100%;
+  background-color: #26272c;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  display: flex;
+  place-items: center;
+}
+
+ .quoteContent h4 {
+  color: white;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  /* letter-spacing: 1px; */
+}
+
+.quoteContent p {
+  color: white;
+  margin-top: 2rem;
+  font-style: italic;
+  text-align: right;
+}
