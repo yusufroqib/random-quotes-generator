@@ -1,4 +1,4 @@
-const url = `https://quote-garden.onrender.com/api/v3/quotes`;
+const url = `https://quote-garden.onrender.com/api/v3/quotes/random`;
 let navBar = document.querySelector(".navigationLink");
 
 const byRandomDiv = document.getElementById('byRandomDiv');
@@ -106,7 +106,7 @@ function atRandom() {
         // console.log(generateNoValue);
 
 
-        fetch(`${url}?limit=${generateNoValue}`)        
+        fetch(`${url}?count=${generateNoValue}`)        
         .then((response) => response.json())
         .then((data) => {
             // console.log(data);
@@ -168,7 +168,7 @@ function byGenre() {
     let getGenreValue = genreSelect.value
     // console.log(generateNoValue);
     
-    fetch(`${url}?limit=${generateNoValue}&genre=${getGenreValue}`)        
+    fetch(`${url}?count=${generateNoValue}&genre=${getGenreValue}`)        
     .then((response) => response.json())
     .then((data) => {
         console.log(data);
@@ -225,7 +225,7 @@ function byAuthor() {
     console.log(generateNoValue);
 
 
-    fetch(`${url}?limit=${generateNoValue}&author=${getAuthorValue}`)        
+    fetch(`${url}?count=${generateNoValue}&author=${getAuthorValue}`)        
     .then((response) => response.json())
     .then((data) => {
         // console.log(data);
@@ -236,8 +236,6 @@ function byAuthor() {
         let sentences = [];
         let authors = [] 
 
-      
-        
       
         data.data.forEach(item => {
             sentences.push(item.quoteText);
