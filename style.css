@@ -272,6 +272,14 @@ li:active {
     text-shadow: 2px 5px 9px rgb(0, 42);
   }
 
+/* ********************************************************************** */
+@media (max-width: 1200px) {
+    #fetchInfo {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+}
 
   @media (max-width: 1045px) {
 
@@ -303,7 +311,7 @@ li:active {
 
       #fetchInfo {
         margin: 3.5rem auto 0;
-        width: 89%;
+        width: 94%;
         font-size: 1.2rem;
         /* display: block; */
     }
@@ -405,8 +413,44 @@ li:active {
 
       #fetchInfo {
         margin: 2rem auto 0;
-        width: 94%;
-        padding: 11px;
+        /* width: 94%; */
+        /* padding: 11px; */
         font-size: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .heading {
+        font-size: 1.5rem;
+    }
+
+    .navigationLink {
+        font-size: 0.9rem;
+    }
+
+    .selections h3 {
+        font-size: 1rem;
+      }
+
+      #authorSelect {
+        width: 150px;
+    }
+}
+
+
+@media (max-width: 330px) {
+    .navigationLink {
+        font-size: 0.7rem;
+    }
+
+
+    #authorSelect {
+        width: 110px;
+    }
+
+    #fetchInfo {
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
+        font-size: 0.8rem;    
     }
 }
