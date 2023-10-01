@@ -167,8 +167,7 @@ function byGenre() {
     let generateNoValue = parseInt(generateNo.value)
     let getGenreValue = genreSelect.value
     // console.log(generateNoValue);
-
-
+    
     fetch(`${url}?limit=${generateNoValue}&genre=${getGenreValue}`)        
     .then((response) => response.json())
     .then((data) => {
@@ -177,20 +176,18 @@ function byGenre() {
         let word 
         let sentences = [];
         let authors = []
-
-        if(sentences.length < 2) {
-            word = 'Quote'
-        } else{
-            word = 'Quotes'
-        }
-        
-
         
         data.data.forEach(item => {
             sentences.push(item.quoteText);
             authors.push(item.quoteAuthor);
         });
         // console.log(sentences);
+
+        if(sentences.length < 2) {
+            word = 'Quote'
+        } else{
+            word = 'Quotes'
+        }
 
         fetchInfo.innerHTML = `
         <h2>Showing ${sentences.length} ${word}</h2>
@@ -239,11 +236,7 @@ function byAuthor() {
         let sentences = [];
         let authors = [] 
 
-        if(totalQuotes < 2) {
-            word = 'Quote'
-        } else{
-            word = 'Quotes'
-        }
+      
         
       
         data.data.forEach(item => {
@@ -251,6 +244,11 @@ function byAuthor() {
             authors.push(item.quoteAuthor);
         });
 
+        if(sentences.length < 2) {
+            word = 'Quote'
+        } else{
+            word = 'Quotes'
+        }
         fetchInfo.innerHTML = `
         <h2>Showing ${sentences.length} ${word}</h2>
         `
