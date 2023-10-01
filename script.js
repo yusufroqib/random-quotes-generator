@@ -8,6 +8,9 @@ const fetchInfo = document.getElementById('fetchInfo')
 // console.log(navBar);
 const ResultEl = document.querySelector(".result");
 const generateBtn = document.querySelector(".generateBtn");
+console.log(fetchInfo);
+const authorSelect = document.getElementById("authorSelect");
+const generateNo = document.getElementById("authorNo");
 
 
 fetchInfo.style.display = 'none'
@@ -40,11 +43,6 @@ const appendOptionsElToSelectEl = (optionItem, selectEl) => {
 
 const populateSelectEl = (selectEl, optionItems) => {
     optionItems.forEach((optionItem) => appendOptionsElToSelectEl(optionItem, selectEl))
-   
-    //To add Search functionality inside the select element
-    $(document).ready(function() {
-        $('#authorSelect').select2({width: '200px'});
-      });
 }
 
 const setUpGenres = async () => {
@@ -59,6 +57,7 @@ const setUpGenres = async () => {
 
     populateSelectEl(genreSelect, genresList)
     populateSelectEl(authorSelect, authorsList)
+    fetchTotalQuotes();
 }
 setUpGenres()
 
@@ -217,8 +216,8 @@ function byGenre() {
 }
 
 function byAuthor() {
-    const generateNo = document.getElementById("authorNo");
-    const authorSelect = document.getElementById("authorSelect");
+    // const generateNo = document.getElementById("authorNo");
+    // const authorSelect = document.getElementById("authorSelect");
 
     let generateNoValue = parseInt(generateNo.value)
     let getAuthorValue = authorSelect.value
@@ -274,3 +273,35 @@ function byAuthor() {
           fetchInfo.style.display = 'flex'
       });
 }
+
+
+// Function to fetch total quotes based on the selected author
+function fetchTotalQuotes() {
+    let getAuthorValue = authorSelect.value;
+
+    fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${getAuthorValue}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            let totalQuotes = parseInt(data.totalQuotes);
+            let maxQuotes = Math.min(totalQuotes, 10); // Limit to a maximum of 10 quotes
+
+            // Update the options in the authorNo select element based on totalQuotes
+            generateNo.innerHTML = ''; // Clear existing options
+            for (let i = 1; i <= maxQuotes; i++) {
+                const optionEl = document.createElement("option");
+                optionEl.value = i;
+                optionEl.textContent = i;
+                generateNo.appendChild(optionEl);
+            }
+        })
+        .catch(() => {
+            fetchInfo.innerHTML = `
+              <h2 class="error">Oops😞!         <br>
+              Could not Generate Quote.</h2>
+          `;
+          fetchInfo.style.display = 'flex';
+        });
+}
+
+authorSelect.addEventListener("change", fetchTotalQuotes);
