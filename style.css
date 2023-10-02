@@ -236,6 +236,7 @@ li:active {
 }
 
 .quotes {
+    border: 1px solid rgb(223, 222, 222);
   width: 40%;
   height: 100%;
   background-color: #26272c;
