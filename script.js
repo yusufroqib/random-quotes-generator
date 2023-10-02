@@ -224,30 +224,33 @@ function byAuthor() {
     console.log(generateNoValue);
 
 
-    fetch(`${url}?count=${generateNoValue}&author=${getAuthorValue}`)        
+    fetch(`${url}?count=10&author=${getAuthorValue}`)        
     .then((response) => response.json())
     .then((data) => {
-        // console.log(data);
-        let totalQuotes = parseInt(data.totalQuotes)
-        // console.log(totalQuotes);
+        console.log(data);
         
         let word
-        let sentences = [];
+        let sentencesExtracted = [];
         let authors = [] 
 
       
         data.data.forEach(item => {
-            sentences.push(item.quoteText);
+            sentencesExtracted.push(item.quoteText);
             authors.push(item.quoteAuthor);
         });
 
-        if(sentences.length < 2) {
+            //Convert the array to a Set to remove duplicates
+        const uniqueSentences = new  Set(sentencesExtracted);
+            //Converts the Set back to an Array
+        const sentences = Array.from(uniqueSentences)
+
+        if(generateNoValue < 2) {
             word = 'Quote'
         } else{
             word = 'Quotes'
         }
         fetchInfo.innerHTML = `
-        <h2>Showing ${sentences.length} ${word}</h2>
+        <h2>Showing ${generateNoValue} ${word}</h2>
         `
 
         // console.log(sentences);
@@ -255,7 +258,7 @@ function byAuthor() {
         fetchInfo.style.display = 'flex'
         ResultEl.style.display = ''
         ResultEl.innerHTML = ''
-        for (let j = 0; j < sentences.length; j++) {
+        for (let j = 0; j < generateNoValue; j++) {
             ResultEl.innerHTML += `
             <div class="quotes">
             <div class="quoteContent">
@@ -283,7 +286,18 @@ function fetchTotalQuotes() {
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            let totalQuotes = parseInt(data.totalQuotes);
+
+            let sentencesExtracted = []; 
+          
+            data.data.forEach(item => {
+                sentencesExtracted.push(item.quoteText);
+            });
+    
+                    //Convert the array to a Set to remove duplicates
+            const uniqueSentences = new  Set(sentencesExtracted);
+                    //Converts the Set back to an Array
+            const sentences = Array.from(uniqueSentences)
+            let totalQuotes = sentences.length;
             let maxQuotes = Math.min(totalQuotes, 10); // Limit to a maximum of 10 quotes
 
             // Update the options in the authorNo select element based on totalQuotes
@@ -295,13 +309,5 @@ function fetchTotalQuotes() {
                 generateNo.appendChild(optionEl);
             }
         })
-        .catch(() => {
-            fetchInfo.innerHTML = `
-              <h2 class="error">Oops😞!         <br>
-              Could not Generate Quote.</h2>
-          `;
-          fetchInfo.style.display = 'flex';
-        });
 }
-
 authorSelect.addEventListener("change", fetchTotalQuotes);
