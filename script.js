@@ -8,7 +8,7 @@ const fetchInfo = document.getElementById('fetchInfo')
 // console.log(navBar);
 const ResultEl = document.querySelector(".result");
 const generateBtn = document.querySelector(".generateBtn");
-console.log(fetchInfo);
+// console.log(fetchInfo);
 const authorSelect = document.getElementById("authorSelect");
 const generateNo = document.getElementById("authorNo");
 
@@ -221,13 +221,13 @@ function byAuthor() {
 
     let generateNoValue = parseInt(generateNo.value)
     let getAuthorValue = authorSelect.value
-    console.log(generateNoValue);
+    // console.log(generateNoValue);
 
 
     fetch(`${url}?count=10&author=${getAuthorValue}`)        
     .then((response) => response.json())
     .then((data) => {
-        console.log(data);
+        // console.log(data);
         
         let word
         let sentencesExtracted = [];
@@ -285,7 +285,7 @@ function fetchTotalQuotes() {
     fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${getAuthorValue}`)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            // console.log(data);
 
             let sentencesExtracted = []; 
           
@@ -310,4 +310,40 @@ function fetchTotalQuotes() {
             }
         })
 }
+
 authorSelect.addEventListener("change", fetchTotalQuotes);
+
+
+
+// *****************************************************************
+$(document).ready(function() {
+    const generateNo = document.getElementById("authorNo");
+    const authorSelect = $('#authorSelect');
+    authorSelect.select2({width: '200px'});
+
+
+    // setTimeout(fetchTotalQuotes, 5000);
+
+    authorSelect.on('change', fetchTotalQuotes);
+    function fetchTotalQuotes() {
+        let getAuthorValue = $(this).val();
+        // Rest of your code
+        fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${getAuthorValue}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            let totalQuotes = parseInt(data.totalQuotes);
+            let maxQuotes = Math.min(totalQuotes, 10); // Limit to a maximum of 10 quotes
+
+            // Update the options in the authorNo select element based on totalQuotes
+            generateNo.innerHTML = ''; // Clear existing options
+            for (let i = 1; i <= maxQuotes; i++) {
+                const optionEl = document.createElement("option");
+                optionEl.value = i;
+                optionEl.textContent = i;
+                generateNo.appendChild(optionEl);
+            }
+        })
+    }
+    // fetchTotalQuotes()
+});
