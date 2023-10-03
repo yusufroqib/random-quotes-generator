@@ -356,7 +356,7 @@ li:active {
   }
 
   #authorNo {
-    width: 60px;
+    width: auto
   }
 
   #fetchInfo {
