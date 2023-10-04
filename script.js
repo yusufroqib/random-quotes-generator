@@ -11,7 +11,7 @@ const generateBtn = document.querySelector(".generateBtn");
 // console.log(fetchInfo);
 const authorSelect = document.getElementById("authorSelect");
 const generateNo = document.getElementById("authorNo");
-
+let getAuthorValue
 
 fetchInfo.style.display = 'none'
 ResultEl.style.display = 'none'
@@ -104,16 +104,9 @@ function atRandom() {
         let generateNoValue = parseInt(generateNo.value);
         // console.log(generateNoValue);
 
-
         fetch(`${url}?count=${generateNoValue}`)        
         .then((response) => response.json())
         .then((data) => {
-            // console.log(data);
-            // console.log(data.data[0].quoteText);
-            // console.log(data.data[0].quoteAuthor);
-            // console.log(data.data[1].quoteText);
-            // console.log(data.data[2].quoteText);
-
             let word 
 
             if(generateNoValue < 2) {
@@ -242,15 +235,16 @@ function byAuthor() {
             //Convert the array to a Set to remove duplicates
         const uniqueSentences = new  Set(sentencesExtracted);
             //Converts the Set back to an Array
-        const sentences = Array.from(uniqueSentences)
+            const sentences = Array.from(uniqueSentences)
 
+            // console.log(sentences);
         if(generateNoValue < 2) {
             word = 'Quote'
         } else{
             word = 'Quotes'
         }
         fetchInfo.innerHTML = `
-        <h2>Showing ${generateNoValue} ${word}</h2>
+        <h2>Showing ${Math.min(generateNoValue, sentences.length)} ${word}</h2>
         `
 
         // console.log(sentences);
@@ -258,7 +252,7 @@ function byAuthor() {
         fetchInfo.style.display = 'flex'
         ResultEl.style.display = ''
         ResultEl.innerHTML = ''
-        for (let j = 0; j < generateNoValue; j++) {
+        for (let j = 0; j < Math.min(generateNoValue, sentences.length); j++) {
             ResultEl.innerHTML += `
             <div class="quotes">
             <div class="quoteContent">
@@ -278,72 +272,53 @@ function byAuthor() {
 }
 
 
-// Function to fetch total quotes based on the selected author
-function fetchTotalQuotes() {
-    let getAuthorValue = authorSelect.value;
-
-    fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${getAuthorValue}`)
-        .then((response) => response.json())
-        .then((data) => {
-            // console.log(data);
-
-            let sentencesExtracted = []; 
-          
-            data.data.forEach(item => {
-                sentencesExtracted.push(item.quoteText);
-            });
-    
-                    //Convert the array to a Set to remove duplicates
-            const uniqueSentences = new  Set(sentencesExtracted);
-                    //Converts the Set back to an Array
-            const sentences = Array.from(uniqueSentences)
-            let totalQuotes = sentences.length;
-            let maxQuotes = Math.min(totalQuotes, 10); // Limit to a maximum of 10 quotes
-
-            // Update the options in the authorNo select element based on totalQuotes
-            generateNo.innerHTML = ''; // Clear existing options
-            for (let i = 1; i <= maxQuotes; i++) {
-                const optionEl = document.createElement("option");
-                optionEl.value = i;
-                optionEl.textContent = i;
-                generateNo.appendChild(optionEl);
-            }
-        })
-}
-
-authorSelect.addEventListener("change", fetchTotalQuotes);
-
-
-
 // *****************************************************************
 $(document).ready(function() {
-    const generateNo = document.getElementById("authorNo");
+    $('#genreSelect').select2({width: '140px'});
+});
+
+
+$(document).ready(function() {
     const authorSelect = $('#authorSelect');
     authorSelect.select2({width: '200px'});
 
-
-    // setTimeout(fetchTotalQuotes, 5000);
-
     authorSelect.on('change', fetchTotalQuotes);
-    function fetchTotalQuotes() {
-        let getAuthorValue = $(this).val();
-        // Rest of your code
-        fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${getAuthorValue}`)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            let totalQuotes = parseInt(data.totalQuotes);
-            let maxQuotes = Math.min(totalQuotes, 10); // Limit to a maximum of 10 quotes
-
-            // Update the options in the authorNo select element based on totalQuotes
-            generateNo.innerHTML = ''; // Clear existing options
-            for (let i = 1; i <= maxQuotes; i++) {
-                const optionEl = document.createElement("option");
-                optionEl.value = i;
-                optionEl.textContent = i;
-                generateNo.appendChild(optionEl);
-            }
-        })
-    }
-    // fetchTotalQuotes()
 });
+
+
+function fetchTotalQuotes() {
+    if (typeof $ !== 'undefined' && $.fn.select2 && $(this).data('select2')) {
+        // Use Select2 value
+        getAuthorValue = $(this).val();
+    } else {
+        // Use standard input value
+        getAuthorValue = authorSelect.value;
+    }
+
+    fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${getAuthorValue}`)
+    .then((response) => response.json())
+    .then((data) => {
+        let sentencesExtracted = []; 
+      
+        data.data.forEach(item => {
+            sentencesExtracted.push(item.quoteText);
+        });
+
+                //Convert the array to a Set to remove duplicates
+        const uniqueSentences = new  Set(sentencesExtracted);
+                //Converts the Set back to an Array
+        const sentences = Array.from(uniqueSentences)
+
+        let totalQuotes = sentences.length;
+        let maxQuotes = Math.min(totalQuotes, 10); // Limit to a maximum of 10 quotes
+
+        // Update the options in the authorNo select element based on totalQuotes
+        generateNo.innerHTML = ''; // Clear existing options
+        for (let i = 1; i <= maxQuotes; i++) {
+            const optionEl = document.createElement("option");
+            optionEl.value = i;
+            optionEl.textContent = i;
+            generateNo.appendChild(optionEl);
+        }
+    })
+}
