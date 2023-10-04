@@ -45,7 +45,7 @@ const populateSelectEl = (selectEl, optionItems) => {
     optionItems.forEach((optionItem) => appendOptionsElToSelectEl(optionItem, selectEl))
 }
 
-const setUpGenres = async () => {
+const setUpAuthorsAndGenres = async () => {
     const genreSelect = document.getElementById('genreSelect')
     const authorSelect = document.getElementById('authorSelect')
 
@@ -59,7 +59,7 @@ const setUpGenres = async () => {
     populateSelectEl(authorSelect, authorsList)
     fetchTotalQuotes();
 }
-setUpGenres()
+setUpAuthorsAndGenres()
 
 
 generateBtn.addEventListener("click", () => {
