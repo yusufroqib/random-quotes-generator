@@ -158,6 +158,7 @@ function byGenre() {
 
     let generateNoValue = parseInt(generateNo.value)
     let getGenreValue = genreSelect.value
+    const genreCapitalize = getGenreValue.charAt(0).toUpperCase() + getGenreValue.slice(1)
     // console.log(generateNoValue);
     
     fetch(`${url}?count=${generateNoValue}&genre=${getGenreValue}`)        
@@ -182,7 +183,7 @@ function byGenre() {
         }
 
         fetchInfo.innerHTML = `
-        <h2>Showing ${sentences.length} ${word}</h2>
+        <h2>Showing ${sentences.length} ${genreCapitalize} ${word}</h2>
         `
 
         fetchInfo.style.display = 'flex'
@@ -244,7 +245,7 @@ function byAuthor() {
             word = 'Quotes'
         }
         fetchInfo.innerHTML = `
-        <h2>Showing ${Math.min(generateNoValue, sentences.length)} ${word}</h2>
+        <h2>Showing ${Math.min(generateNoValue, sentences.length)} ${word} by ${getAuthorValue}</h2>
         `
 
         // console.log(sentences);
