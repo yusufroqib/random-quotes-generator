@@ -74,28 +74,31 @@ generateBtn.addEventListener("click", () => {
 
 // Add a click event listener to the parent element
 navBar.addEventListener("click", (event) => {
-  if (event.target.classList.contains("navMenu")) {             // if (event.target.tagName === 'LI') {
+  if (event.target.classList.contains("navMenu")) {
+    // If the clicked element has the class "navMenu"
     // console.log(event.target.tagName);
-
+    
     // Remove 'active' class from all navbar items
     let navBarItems = document.querySelectorAll(".navMenu");
     // console.log(navBarItems);
     navBarItems.forEach((item) => {
       item.classList.remove("active");
     });
-
+    
     // Add 'active' class to the clicked navbar item
     event.target.classList.add("active");
     
     const activeNavMenu = document.querySelector(".active");
     const selectedFunction = activeNavMenu.getAttribute('data-function');
-
+    
+    // Show or hide divs based on the selected function
     byRandomDiv.style.display = (selectedFunction === 'atRandom') ? 'flex' : 'none';
     byAuthorDiv.style.display = (selectedFunction === 'byAuthor') ? 'flex' : 'none';
     byGenreDiv.style.display = (selectedFunction === 'byGenre') ? 'flex' : 'none';
+    
     ResultEl.innerHTML = '';
     fetchInfo.style.display = 'none';
-}
+  }
 });
 
 function atRandom() {
