@@ -210,66 +210,65 @@ function byGenre() {
 }
 
 function byAuthor() {
-    // const generateNo = document.getElementById("authorNo");
-    // const authorSelect = document.getElementById("authorSelect");
+    // Get the value of the "authorNo" select element
+    let generateNoValue = parseInt(generateNo.value);
+    
+    // Get the value of the "authorSelect" select element
+    let getAuthorValue = authorSelect.value;
 
-    let generateNoValue = parseInt(generateNo.value)
-    let getAuthorValue = authorSelect.value
-    // console.log(generateNoValue);
-
-
-    fetch(`${url}?count=10&author=${getAuthorValue}`)        
+    fetch(`${url}?count=10&author=${getAuthorValue}`)
     .then((response) => response.json())
     .then((data) => {
-        // console.log(data);
-        
-        let word
+        let word;
         let sentencesExtracted = [];
-        let authors = [] 
+        let authors = [];
 
-      
+        // Extract the quoteText and quoteAuthor properties from each item in the data array
         data.data.forEach(item => {
             sentencesExtracted.push(item.quoteText);
             authors.push(item.quoteAuthor);
         });
 
-            //Convert the array to a Set to remove duplicates
-        const uniqueSentences = new  Set(sentencesExtracted);
-            //Converts the Set back to an Array
-            const sentences = Array.from(uniqueSentences)
+        // Convert the array to a Set to remove duplicates
+        const uniqueSentences = new Set(sentencesExtracted);
+        // Convert the Set back to an Array
+        const sentences = Array.from(uniqueSentences);
 
-            // console.log(sentences);
+        // Determine the word to use based on the generateNoValue
         if(generateNoValue < 2) {
-            word = 'Quote'
-        } else{
-            word = 'Quotes'
+            word = 'Quote';
+        } else {
+            word = 'Quotes';
         }
+
+        // Update the fetchInfo element to display the number of quotes and the author
         fetchInfo.innerHTML = `
         <h2>Showing ${Math.min(generateNoValue, sentences.length)} ${word} by ${getAuthorValue}</h2>
-        `
+        `;
 
-        // console.log(sentences);
+        fetchInfo.style.display = 'flex';
+        ResultEl.style.display = '';
+        ResultEl.innerHTML = '';
 
-        fetchInfo.style.display = 'flex'
-        ResultEl.style.display = ''
-        ResultEl.innerHTML = ''
+        // Display the quotes and their authors
         for (let j = 0; j < Math.min(generateNoValue, sentences.length); j++) {
             ResultEl.innerHTML += `
             <div class="quotes">
-            <div class="quoteContent">
-                <h4>${sentences[j]}</h4>
-            <p>-${authors[j]}</p>
+                <div class="quoteContent">
+                    <h4>${sentences[j]}</h4>
+                    <p>-${authors[j]}</p>
+                </div>
             </div>
-        </div>
-            `
+            `;
         }
     }).catch(() => {
+        // Display an error message if the quotes could not be generated
         fetchInfo.innerHTML = `
-              <h2 class="error">Oops😞!         <br>
-              Could not Generate Quote.</h2>
-          `;
-          fetchInfo.style.display = 'flex'
-      });
+            <h2 class="error">Oops😞!<br>
+            Could not Generate Quote.</h2>
+        `;
+        fetchInfo.style.display = 'flex';
+    });
 }
 
 
