@@ -99,56 +99,60 @@ navBar.addEventListener("click", (event) => {
 });
 
 function atRandom() {
-  const generateNo = document.getElementById("randomNo");
+    const generateNo = document.getElementById("randomNo");
 
-        let generateNoValue = parseInt(generateNo.value);
-        // console.log(generateNoValue);
+    // Get the value of the "randomNo" select element
+    let generateNoValue = parseInt(generateNo.value);
 
-        fetch(`${url}?count=${generateNoValue}`)        
-        .then((response) => response.json())
-        .then((data) => {
-            let word 
+    fetch(`${url}?count=${generateNoValue}`)
+    .then((response) => response.json())
+    .then((data) => {
+        let word;
 
-            if(generateNoValue < 2) {
-                word = 'Quote'
-            } else{
-                word = 'Quotes'
-            }
+        // Determine the word to use based on the generateNoValue
+        if(generateNoValue < 2) {
+            word = 'Quote';
+        } else {
+            word = 'Quotes';
+        }
 
-            fetchInfo.innerHTML = `
-            <h2>Showing ${generateNoValue} ${word}</h2>
-            `
+        // Update the fetchInfo element to display the number of quotes and the word
+        fetchInfo.innerHTML = `
+        <h2>Showing ${generateNoValue} ${word}</h2>
+        `;
 
-            let sentences = [];
-            let authors = [];
+        let sentences = [];
+        let authors = [];
 
-            
-            data.data.forEach(item => {
-                sentences.push(item.quoteText);
-                authors.push(item.quoteAuthor);
-            });
-            // console.log(sentences);
+        // Extract the quoteText and quoteAuthor properties from each item in the data array
+        data.data.forEach(item => {
+            sentences.push(item.quoteText);
+            authors.push(item.quoteAuthor);
+        });
 
-            fetchInfo.style.display = 'flex';
-            ResultEl.style.display = '';
-            ResultEl.innerHTML = '';
-            for (let j = 0; j < sentences.length; j++) {
-                ResultEl.innerHTML += `
-                <div class="quotes">
+        fetchInfo.style.display = 'flex';
+        ResultEl.style.display = '';
+        ResultEl.innerHTML = '';
+
+        // Display the quotes and their authors
+        for (let j = 0; j < sentences.length; j++) {
+            ResultEl.innerHTML += `
+            <div class="quotes">
                 <div class="quoteContent">
                     <h4>${sentences[j]}</h4>
-                <p>-${authors[j]}</p>
+                    <p>-${authors[j]}</p>
                 </div>
             </div>
-                `
-            }
+            `;
+        }
     })
     .catch(() => {
+        // Display an error message if the quotes could not be generated
         fetchInfo.innerHTML = `
-              <h2 class="error">Oops😞!         <br>
-              Could not Generate Quote.</h2>
-          `;
-          fetchInfo.style.display = 'flex'
+            <h2 class="error">Oops😞!<br>
+            Could not Generate Quote.</h2>
+        `;
+        fetchInfo.style.display = 'flex';
     });
 }
 
