@@ -313,7 +313,7 @@ function fetchTotalQuotes() {
         let totalQuotes = sentences.length;
         let maxQuotes = Math.min(totalQuotes, 10); // Limit to a maximum of 10 quotes
 
-        // Update the options in the authorNo select element based on totalQuotes
+        // Update the options in the generateNo select element based on totalQuotes
         generateNo.innerHTML = ''; // Clear existing options
         for (let i = 1; i <= maxQuotes; i++) {
             const optionEl = document.createElement("option");
