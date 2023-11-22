@@ -277,15 +277,15 @@ function byAuthor() {
 $(document).ready(function() {
     $('#genreSelect').select2({width: '140px'});
 });
-
+// Initializes the select element with the ID "genreSelect" using the Select2 library and sets its width to 140px.
 
 $(document).ready(function() {
     const authorSelect = $('#authorSelect');
     authorSelect.select2({width: '200px'});
-
     authorSelect.on('change', fetchTotalQuotes);
 });
-
+// Initializes the select element with the ID "authorSelect" using the Select2 library and sets its width to 200px.
+// Adds a change event listener to the "authorSelect" element, which calls the "fetchTotalQuotes" function when the selection changes.
 
 function fetchTotalQuotes() {
     if (typeof $ !== 'undefined' && $.fn.select2 && $(this).data('select2')) {
@@ -295,25 +295,29 @@ function fetchTotalQuotes() {
         // Use standard input value
         getAuthorValue = authorSelect.value;
     }
+    // Checks if Select2 is available and if the current element has a Select2 instance.
+    // If true, assigns the selected value from Select2 to "getAuthorValue".
+    // If false, falls back to using the standard input value from the "authorSelect" element.
 
     fetch(`https://quote-garden.onrender.com/api/v3/quotes?author=${getAuthorValue}`)
     .then((response) => response.json())
     .then((data) => {
         let sentencesExtracted = []; 
-      
         data.data.forEach(item => {
             sentencesExtracted.push(item.quoteText);
         });
+        // Extracts the quoteText property from each item in the data array and adds it to the "sentencesExtracted" array.
 
-                //Convert the array to a Set to remove duplicates
-        const uniqueSentences = new  Set(sentencesExtracted);
-                //Converts the Set back to an Array
-        const sentences = Array.from(uniqueSentences)
+        // Convert the array to a Set to remove duplicates
+        const uniqueSentences = new Set(sentencesExtracted);
+        // Converts the Set back to an Array
+        const sentences = Array.from(uniqueSentences);
+        // Removes duplicates from the "sentencesExtracted" array by converting it to a Set and then back to an array.
 
         let totalQuotes = sentences.length;
         let maxQuotes = Math.min(totalQuotes, 10); // Limit to a maximum of 10 quotes
 
-        // Update the options in the generateNo select element based on totalQuotes
+        // Update the options in the authorNo select element based on totalQuotes
         generateNo.innerHTML = ''; // Clear existing options
         for (let i = 1; i <= maxQuotes; i++) {
             const optionEl = document.createElement("option");
@@ -321,5 +325,7 @@ function fetchTotalQuotes() {
             optionEl.textContent = i;
             generateNo.appendChild(optionEl);
         }
-    })
+        // Updates the options in the "generateNo" select element based on the total number of quotes.
+        // Clears any existing options and adds new options representing numbers from 1 to the maximum number of quotes.
+    });
 }
